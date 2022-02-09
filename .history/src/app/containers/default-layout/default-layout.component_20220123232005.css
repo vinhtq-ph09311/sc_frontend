@@ -1,0 +1,4 @@
+::ng-deep .main > cui-breadcrumb.app-breadcrumb {
+    margin-bottom: 500px;
+    background-color: blue;
+}

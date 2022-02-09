@@ -1,0 +1,28 @@
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "../../../environments/environment";
+
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Account } from "../../model/account/account";
+
+@Injectable({ providedIn: 'root' })
+export class AccountService {
+
+    apiUrl = environment.apiUrl;
+
+    constructor(private http: HttpClient) {}
+
+    getListAccount(pageIndex: number, pageSize: number, sortField: string | null, sortOrder: string | null) {
+        let params = new HttpParams()
+          .append('page', `${pageIndex}`)
+          .append('results', `${pageSize}`)
+          .append('sortField', `${sortField}`)
+          .append('sortOrder', `${sortOrder}`);
+
+        return this.http
+          .get(`${this.apiUrl}`, { params })
+          .pipe(catchError(() => of({ results: [] })));
+      }
+    
+}

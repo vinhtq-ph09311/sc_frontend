@@ -1,0 +1,254 @@
+<div>
+  <nz-card>
+    <div nz-row>
+      <div nz-col nzSpan="8">
+        <form [hidden]="!hiddenAdvancedSearchForm" nz-form [nzLayout]="'inline'">
+          <nz-form-item>
+            <input nz-input placeholder="keyword ..."/>
+            &nbsp;
+            <button nz-button nzType="primary"><i class="fa fa-search mr-1"></i>Search</button>
+          </nz-form-item>
+        </form>  
+      </div>
+      <div nz-col nzSpan="8" nzOffset="8">
+        <div class="float-right">
+        <button nz-button nzType="primary"><i class="fa fa-repeat mr-1"></i>Refresh</button>
+        <button nz-button nzType="primary" (click)="showModal()"><i class="fa fa-plus mr-1"></i>New</button>
+        <button nz-button nzType="primary"(click)="toggleCollapse()" ><i class="fa fa-filter mr-1"></i>Filter</button>
+      </div>
+      </div>
+    </div>
+
+    <br>
+
+      <!-- advanced search form -->
+    <div [hidden]="hiddenAdvancedSearchForm">
+      <form nz-form class="advanced-search-form" [nzLayout]="'vertical'">
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="6">
+            <nz-form-item>
+              <nz-form-label><span nz-typography><strong>Username</strong></span></nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="username"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="6">
+            <nz-form-item>
+              <nz-form-label><span nz-typography><strong>Fullname</strong></span></nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="fullname"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="6">
+            <nz-form-item>
+              <nz-form-label><span nz-typography><strong>Account type</strong></span></nz-form-label>
+              <nz-form-control>
+                <nz-select ngModel="lucy">
+                  <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                  <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                  <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="6">
+            <nz-form-item>
+              <nz-form-label><span nz-typography><strong>Last login</strong></span></nz-form-label>
+              <nz-form-control>
+                <nz-date-picker></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="6">
+            <nz-form-item>
+              <nz-form-label><span nz-typography><strong>Create date</strong></span></nz-form-label>
+              <nz-form-control>
+                <nz-date-picker></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="6">
+            <nz-form-item>
+              <nz-form-label><span nz-typography><strong>Status</strong></span></nz-form-label>
+              <nz-form-control>
+                <nz-select ngModel="lucy">
+                  <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                  <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                  <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      
+        <div nz-row>
+          <div nz-col [nzSpan]="24">
+            <button nz-button class="rounded-lg">Reset</button>
+            <button nz-button nzType="primary" class="rounded-lg">Search</button>
+          </div>
+        </div>
+      </form>
+
+      <br>
+    </div>
+    
+    <!-- table -->
+    <nz-table #rowSelectionTable nzBordered
+      nzShowSizeChanger
+      [nzData]="listOfData"
+      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+      >
+      <thead>
+        <tr>
+          <th
+            [(nzChecked)]="checked"
+            [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"
+          ></th>
+          <th [nzSortFn]="true" nzWidth="5%">No</th>
+          <th [nzSortFn]="true" nzWidth="10%">Username</th>
+          <th [nzSortFn]="true" nzWidth="15%">Fullname</th>
+          <th [nzSortFn]="true" nzWidth="10%">Account type</th>
+          <th [nzSortFn]="true" nzWidth="10%">Login fail</th>
+          <th [nzSortFn]="true" nzWidth="15%">Last login</th>
+          <th [nzSortFn]="true" nzWidth="15%">Create date</th>
+          <th [nzSortFn]="true" nzWidth="10%">Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of rowSelectionTable.data">
+          <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+          <td><span nz-typography><strong>1</strong></span></td>
+          <td>vinhndq</td>
+          <td>Nguyễn Trần Quang Vinh</td>
+          <td>Admin</td>
+          <td>14</td>
+          <td>31-12-2020 15:55:55</td>
+          <td>31-12-2020 15:55:55</td>
+          <td class="text-center">
+            <nz-switch nzSize="small" [ngModel]="true"></nz-switch>
+          </td>
+          <td class="text-center">
+            <a nz-dropdown [nzDropdownMenu]="menu">
+              <i class="fa fa-ellipsis-h"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item>
+                  <div>
+                    <i class="fa fa-eye text-success"></i>
+                  </div>
+                  &nbsp;<span>Detail</span>
+                </li>
+                <li nz-menu-item><i class="fa fa-pencil text-warning"></i>&nbsp;<span>Detail</span></li>
+                <li nz-menu-item nzDanger><i class="fa fa-trash"></i>&nbsp;<span>Detail</span></li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+        </tr>
+      </tbody>
+      </nz-table>
+  </nz-card>
+
+  <!-- modal -->
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Tạo mới tài khoản" nzOkText="Tạo" nzCancelText="Đóng"
+  (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" 
+  [nzOkLoading]="isOkLoading" nzCentered [nzClosable]="false"
+  [nzWidth]="720">
+
+  <form nz-form [nzLayout]="'inline'">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>Tên tài khoản</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập tên tài khoản"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>Loại tài khoản</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>Trạng thái</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>Mật khẩu</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>Xác nhận mật khẩu</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>Họ và tên</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>Địa chỉ Email</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzRequired>Số điện thoại</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="nhập họ tên"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>Mô tả</nz-form-label>
+          <nz-form-control>
+            <textarea rows="2" nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <label nz-checkbox [nzChecked]="true">Sử dụng mật khẩu tự động</label>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-item>
+            <nz-form-label><label nz-checkbox [nzChecked]="true">Đổi mật khẩu trong lần đầu đăng nhập</label></nz-form-label>
+          </nz-form-item>
+        </nz-form-item>
+      </div>
+      <nz-divider nzPlain nzText="Vai trò" nzOrientation="left"></nz-divider>
+    </div>
+  </form>
+</nz-modal>
+
+</div>
+

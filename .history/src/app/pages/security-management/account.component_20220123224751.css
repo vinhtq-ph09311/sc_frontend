@@ -1,0 +1,52 @@
+.advanced-search-form {
+    border: 1px solid #20a8d8;
+    border-radius: 6px; 
+    padding: 24px;
+}
+
+nz-date-picker,
+nz-time-picker {
+    width: 100%;
+}
+
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+    color: #777;
+}
+
+.role-input {
+    width: 30%;
+    margin-right: 8px;
+}
+
+.required:after {
+    content:"*";
+    color: red;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+    background:#e6f7ff;
+}
+
+/* .ant-table-tbody > tr.ant-table-row:nth-child(2n) {
+    background:#ffffff;
+} */
+
+::ng-deep .ant-table.ant-table-small > .ant-table-container >
+ .ant-table-content > table > .ant-table-thead > tr.ant-table-row > th
+{ 
+    background-color:#e5e6e7;
+}
+
+
+
+
+

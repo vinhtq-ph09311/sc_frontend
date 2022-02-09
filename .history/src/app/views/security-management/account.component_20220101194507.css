@@ -1,0 +1,17 @@
+.advanced-search-form {
+    border: 1px solid #20a8d8;
+    border-radius: 6px; 
+    padding: 24px;
+}
+
+nz-date-picker,
+nz-time-picker {
+    width: 100%;
+}
+
+.space-align-block {
+    margin: 8px 4px;
+    border: 1px solid #40a9ff;
+    padding: 4px;
+    flex: none;
+  }

@@ -1,0 +1,296 @@
+<nz-card>
+  <nz-card-meta nzTitle="List Account" [nzAvatar]="titleIcon"></nz-card-meta> 
+  <ng-template #titleIcon>
+    <i class="fa fa-user-o fa-2x text-primary"></i>
+  </ng-template>
+  <nz-divider></nz-divider>
+  <div nz-row>
+    <div nz-col nzSpan="8">
+      <form [hidden]="!hiddenAdvancedSearchForm" nz-form [nzLayout]="'inline'">
+        <nz-form-item>
+          <input nz-input placeholder="keyword ..."/>
+          &nbsp;
+          <button nz-button nzType="primary"><i class="fa fa-search mr-1"></i>Search</button>
+        </nz-form-item>
+      </form>  
+    </div>
+    <div nz-col nzSpan="8" nzOffset="8">
+      <div class="float-right">
+      <button nz-button nzType="primary"><i class="fa fa-repeat mr-1"></i>Refresh</button>
+      <button nz-button nzType="primary" (click)="showModal()"><i class="fa fa-plus mr-1"></i>New</button>
+      <button nz-button nzType="primary"(click)="toggleCollapse()" ><i class="fa fa-filter mr-1"></i>Filter</button>
+    </div>
+    </div>
+  </div>
+
+  <br>
+
+    <!-- advanced search form -->
+  <div [hidden]="hiddenAdvancedSearchForm">
+    <form nz-form class="advanced-search-form" [nzLayout]="'vertical'">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label>Username</nz-form-label>
+            <nz-form-control>
+              <input nz-input/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label>Fullname</nz-form-label>
+            <nz-form-control>
+              <input nz-input/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label>Account type</nz-form-label>
+            <nz-form-control>
+              <nz-select ngModel="lucy">
+                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label>Last login</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label>Create date</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label>Status</nz-form-label>
+            <nz-form-control>
+              <nz-select ngModel="lucy">
+                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                <nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    
+      <div nz-row>
+        <div nz-col [nzSpan]="24">
+          <button nz-button>Reset</button>
+          <button nz-button nzType="primary">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <br>
+  </div>
+  
+  <!-- table -->
+  <nz-table #rowSelectionTable nzBordered
+    nzShowSizeChanger
+    [nzData]="listOfData"
+    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+    >
+    <thead>
+      <tr>
+        <th
+          [(nzChecked)]="checked"
+          [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="onAllChecked($event)"
+        ></th>
+        <th [nzSortFn]="true" nzWidth="5%">No</th>
+        <th [nzSortFn]="true" nzWidth="10%">Username</th>
+        <th [nzSortFn]="true" nzWidth="15%">Fullname</th>
+        <th [nzSortFn]="true" nzWidth="10%">Account type</th>
+        <th [nzSortFn]="true" nzWidth="10%">Login fail</th>
+        <th [nzSortFn]="true" nzWidth="20%">Last login</th>
+        <th [nzSortFn]="true" nzWidth="10%">Create date</th>
+        <th [nzSortFn]="true" nzWidth="10%">Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data; index as i">
+        <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+        <td><span nz-typography><strong>{{i}}</strong></span></td>
+        <td>
+          <h5 nz-typography>vinhtq</h5>
+          <span class="text-secondary">vinhtqph09311@gmail.com</span>
+        </td>
+        <td>Vinh</td>
+        <td>Admin</td>
+        <td>63463</td>
+        <td>31/12/2020 15:55:55 <span class="text-secondary">6 min ago</span></td>
+        <td>31/12/2020</td>
+        <td class="text-center">
+          <nz-switch nzSize="small" [ngModel]="true"></nz-switch>
+        </td>
+        <td class="text-center">
+          <a nz-dropdown [nzDropdownMenu]="menu">
+            <i class="fa fa-ellipsis-h"></i>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>
+                <i class="fa fa-navicon text-success mr-1"></i>
+                <span>Detail</span>
+              </li>
+              <li nz-menu-item>
+                <i class="fa fa-pencil text-warning mr-1"></i>
+                <span>Edit</span>
+              </li>
+              <li nz-menu-item nzDanger>
+                <i class="fa fa-trash mr-1"></i>
+                <span>Delete</span>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </td>
+      </tr>
+    </tbody>
+    </nz-table>
+</nz-card>
+
+<!-- modal -->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="New Account" [nzFooter]="modalFooter" 
+  nzCentered [nzClosable]="false" [nzWidth]="720">
+
+  <form nz-form [formGroup]="accountForm">
+    <nz-tabset>
+      <nz-tab nzTitle="Account Infomation">
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Username</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Account type</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Password</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Confirm password</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Fullname</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Status</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Phone</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left required">Email</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="10" class="text-left">Description</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <textarea rows="2" nz-input></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+    
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox [nzChecked]="true">Change password with first login</label>
+            <br>
+            <label nz-checkbox [nzChecked]="false" class="mt-2">Auto Password</label>
+          </div>
+        </div>
+      </nz-tab>
+
+      <nz-tab nzTitle="Assign Role">
+        <div nz-col>
+          <nz-form-item>
+            <nz-form-control>
+              <button nz-button nzType="dashed" (click)="addField($event)">
+                <i class="fa fa-plus mr-1"></i>
+                Add more field
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item *ngFor="let control of listOfControl; let i = index">
+            <nz-form-label [nzFor]="control.controlInstance">
+              Role
+            </nz-form-label>
+            <nz-form-control>
+              <input class="role-input" nz-input [attr.id]="control.id" [formControlName]="control.controlInstance"/>
+              <nz-date-picker [nzPlaceHolder]="'Expried Date'" class="role-input"></nz-date-picker>
+              <i class="dynamic-delete-button fa fa-minus-circle" (click)="removeField(control, $event)"></i>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </form>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="dashed">Reset</button>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" (click)="handleOk()">Save</button>
+  </ng-template>
+</nz-modal>
+

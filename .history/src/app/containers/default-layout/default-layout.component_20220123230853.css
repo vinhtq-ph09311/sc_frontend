@@ -1,0 +1,4 @@
+.app-body > .main > .app-breadcumb > ol.breadcrumb {
+    background-color: blue;
+    margin-bottom: 0 !important;
+}
